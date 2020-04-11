@@ -1,0 +1,78 @@
+<DOCTYPE html>
+<html>
+<head>
+<style>
+table, td {
+  border: 1px solid black;
+  padding: 20px;
+}
+</style>
+</head>
+<body>
+<script>
+
+// Create a Chessboard with table
+function createChessBoard() {
+	var table = document.createElement("table");
+	table.setAttribute('id', 'chessTable')
+	for (var i = 0; i < 8; i++) {
+		var tr = document.createElement('tr');
+		for (var j = 0; j < 8; j++) {
+		// assign dynamic id for the td element with i and j value
+			var td = document.createElement('td');
+			td.setAttribute("class", "td" + i + '_' + j)
+			//alternate colors filling
+			if (i%2 == j%2) {
+				td.style.backgroundColor = "white";
+			} else {
+				td.style.backgroundColor = "black";
+			}
+			tr.appendChild(td);
+		}
+		table.appendChild(tr);
+	}
+document.body.appendChild(table);
+}
+createChessBoard();
+// when a click event occurs only then call function
+document.onclick = checkClick
+
+// checkclick function with event as parameter
+function checkClick(e) {
+// remove td from the classname and remove i and j seperately
+var chessBorad = document.getElementById('chessTable')
+document.body.removeChild(chessBorad)
+createChessBoard();
+var tdremove = e.target.className.split('td')
+var temp = tdremove[1].split('_')
+var i = parseInt(temp[0])
+var j = parseInt(temp[1])
+var tdElement = ''
+var classValue = ''
+	// Diagonal wise fill colors in all 4 directions
+	for (var m = i,n = j; m < 8 && n < 8;m++,n++) { 
+		// Condition for principal diagonal
+			classValue = 'td' + m + '_' + n 
+			tdElement = document.getElementsByClassName(classValue)
+			tdElement[0].style.backgroundColor = "red";
+	}
+	for (var m = i,n = j; m >= 0 && n >= 0;m--,n--) {
+			classValue = 'td' + m + '_' + n 
+			tdElement = document.getElementsByClassName(classValue)
+			tdElement[0].style.backgroundColor = "red";
+	
+	}
+	for (var m = i,n = j; m < 8 && n >= 0;m++,n--) {
+			classValue = 'td' + m + '_' + n 
+			tdElement = document.getElementsByClassName(classValue)
+			tdElement[0].style.backgroundColor = "red";
+	}
+	for (var m = i,n = j; m >= 0 && n < 8;m--,n++) {
+			classValue = 'td' + m + '_' + n 
+			tdElement = document.getElementsByClassName(classValue)
+			tdElement[0].style.backgroundColor = "red";
+	}		    
+}
+</script>
+</body>
+</html> 
